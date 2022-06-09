@@ -1,0 +1,53 @@
+.lib__tooltip-static (
+        @tooltip_font-size: @academy-standard-font-size,
+        @tooltip_margin: @indent__l 0,
+        @tooltip_width: 40px,
+        @tooltip_weight: @academy-standard-font-weight,
+        @tooltip_line-height: @tooltip_font-size,
+        @tooltip_padding: 5px 15px
+    ) {
+        display: flex;
+        align-items: center;
+        background-color: @color-academy-information-light;
+        border-radius: @academy-border-radius;
+        gap: 20px;
+        padding: @tooltip_padding;
+        position: relative;
+        height: fit-content;
+        margin: @tooltip_margin;
+
+        .static-tooltip-academy {
+            width: @tooltip_width;
+            height: 20px;
+
+            &::before{
+                content:  "\2139";
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background-color: @color-academy-information-dark;
+                color: @color-white;
+                width: 20px;
+                height: 20px;
+                font-weight: @academy-light-font-weight;
+            }
+        }
+
+        span.static-tooltip-academy-text  {
+            color: @color-academy-information-dark !important;
+            font-size: @tooltip_font-size;
+            line-height: @tooltip_line-height;
+            font-weight: @tooltip_weight;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .static-tooltip-academy-container {
+        .lib__tooltip-static( @tooltip_padding: 30px 150px);
+        margin: 0;
+    }
