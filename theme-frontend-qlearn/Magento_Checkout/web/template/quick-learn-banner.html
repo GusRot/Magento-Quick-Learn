@@ -1,0 +1,25 @@
+<div class="static-tooltip-academy-container" >
+    <span class="static-tooltip-academy"></span>
+
+
+    <span class="static-tooltip-academy-text" data-bind="text: message"></span>
+
+    <div class="primary continue">
+        <button class="action primary" data-bind="enable: checkProducts(), click: sumTotal.bind($data, this)" disabled>
+            <!-- ko i18n: 'Next' --><!-- /ko -->
+
+            <!-- <span data-bind="i18n: 'Next'"></span> -->
+        </button>
+    </div>
+    
+    <div data-bind="fadeVisible: isVisible()">
+        <input type="text" class="my-style" data-bind="value: subtotal()">
+    </div>
+
+    <!-- ko if: !isVisible() -->
+        <input type="text" class="my-style" data-bind="value: 2">
+    <!-- /ko -->
+
+    <div data-bind="if: isVisible()">maior que 40</div>
+
+</div>

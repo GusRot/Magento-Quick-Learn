@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="checkout.header.container">
+            <block name="quick.learn.banner" template="Magento_Checkout::quick-learn-banner.phtml" before="-">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="quick-learn-banner" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Checkout/js/quick-learn-banner</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="test" xsi:type="number">100</item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

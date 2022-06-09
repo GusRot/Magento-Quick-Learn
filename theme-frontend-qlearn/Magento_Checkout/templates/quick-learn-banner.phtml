@@ -1,0 +1,16 @@
+<?php
+/* @var $block Magento/Framework/View/Element/Template */
+?>
+
+<div class="quick-learn-banner-class" id="quick-learn-banner-id" data-bind="scope: 'quick-learn-banner'">
+    <!-- ko template: getTemplate() -->  
+    <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#quick-learn-banner-id": {
+            "Magento_Ui/js/core/app": <?= $block->getJsLayout() ?>
+        }
+    }
+</script>
