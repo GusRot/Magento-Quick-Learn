@@ -1,3 +1,4 @@
+###  Version README [English](./README-en.md)
 <div style="display: flex; gap:1rem;">
 <a href="#">
 <img alt="Repository size" src="https://img.shields.io/github/repo-size/GusRot/Magento-Quick-Learn">
@@ -21,10 +22,11 @@ Apresentação de conteúdo de Magento sobre UiComponents e KnockoutJS
 UiComponents são usados ​​para representar elementos distintos da interface do usuário, como tabelas, botões, diálogos e outros. Eles são projetados para renderização de interface de usuário (UI) simples e flexível. Os componentes são responsáveis ​​por renderizar fragmentos de página de resultados e fornecer/suportar interações adicionais de componentes JavaScript e servidor.
 
 A documentação do Magento recomenda o uso de UiComponents sempre que possível, pois tendem a fazer o mesmo em seu código base. (fonte): [https://devdocs.magento.com/guides/v2.4/ui_comp_guide/bk-ui_comps.html] (Overview of UI components)
+Se voce está com dúvida em usar Jquery ou Ui Components, provavelmente será melhor usar UiComponents
 
 #### **Criando o Componente**
 
-O esqueleto de um UIComponente exige a comunicação de arquivos XML, PHTML e JS. Vou mostrar a seguir o passo a passo em cada um dos arquivos. Antes disso, você precisa saber qual o módulo que você irá trabalhar, neste caso, irei dar o exemplo de uma aplicação na página de checkout, localizado na handle: checkout_index_index no módulo Magento_Checkout. 
+O esqueleto de um UIComponente exige a comunicação de arquivos XML, PHTML e JS. Vou mostrar a seguir o passo a passo em cada um dos arquivos. Antes disso, você precisa saber qual o módulo que você irá trabalhar, neste caso, irei dar o exemplo de uma aplicação na página de checkout, localizado na handle: **checkout_index_index** no módulo `Magento_Checkout`. 
 Para encontrar a handle ou entender como funciona, recomendo este artigo: (https://calazanslucas.medium.com/magento-2-guia-de-sobrevivencia-no-frontend-parte-1-76fe6d2ffe4e)
 
 #### **XML - layout/checkout_index_index.xml**
@@ -113,7 +115,7 @@ Aqui estendemos o componente base do Magento e a função initialize executa qua
 
 #### **Adicionando variáveis ao PHTML**
 
-O defaults trás variáveis que podem ser compartilhados por data-bind para o phtml, já definimos o data-bind no exemplo anterior. Ele não era necessário naquele exemplo, mas normalmente quando inicializamos um componente precisamos desse conhecimento que vamos demonstrar nessa sessão.
+O `defaults` trás variáveis que podem ser compartilhados por data-bind para o phtml.
 
 No seu JS:
 
@@ -145,7 +147,7 @@ Ao invés do texto teste exibido no exemplo anterior, será exibido a nova mensa
 
 ### **Declarando knockout**
 
-Iremos encontrar o knockout apenas como ko no Magento, para declará-lo aproveitamos nosso define já utilizado na sessão anterior com o seguinte código:
+Iremos encontrar o `knockout` apenas como `ko` no Magento, para declará-lo aproveitamos nosso define já utilizado na sessão anterior com o seguinte código:
 
 ~~~javascript
 define([
@@ -164,7 +166,7 @@ define([
 
 ### **Inicializando um ko template**
 
-É comum utilizarmos knockout com um arquivo .html e para isso precisamos adicionar mais um arquivo para o nosso projeto. Para isso, precisamos adicionar no objeto defaults uma propriedade chamada template(bem intuitivo né).
+É comum utilizarmos `knockout` com um arquivo .html e para isso precisamos adicionar mais um arquivo para o nosso projeto. Para isso, precisamos adicionar no objeto defaults uma propriedade chamada template(bem intuitivo né).
 
 ~~~javascript
 ...
@@ -204,7 +206,7 @@ Além disso precisamos chamar este template no PHTML da seguinte forma:
 </script>
 ~~~
 
-Note que a única alteração foi a adição de uma linha de comentário ko. 
+Note que a única alteração foi a adição de uma linha de comentário `ko`.
 
 Se você não está familiarizado com está nomenclatura do knockout, recomendo dar uma olhada na documentação oficial: (https://knockoutjs.com/documentation/introduction.html).      *PS:   No começo essas invocações através de comentário .html assustam, mas você pega o jeito logo!*
 
@@ -250,6 +252,85 @@ Para acessar o último valor do observable temos a propriedade:
 `this.subtotal._lastValue`
 `this.isVisible._lastValue`
 
+### **data-bind**
+
+Existem diversos métodos que podemos utilizar através do `data-bind`, vou deixar alguns exemplos abaixo:
+
+~~~html
+    <div data-bind="fadeVisible: isVisible"> 
+        <input type="text" class="my-style" data-bind="value: subtotal">
+    </div>
+
+    <!-- ko if: !isVisible -->
+        <input type="text" class="my-style" data-bind="value: subtotal">
+    <!-- /ko -->
+
+    <div class="primary continue">
+        <button class="action primary" data-bind="enable: isVisible, i18n: 'Next'" disabled />
+    </div>
+~~~
+
+#### **Bindings:**
+
+- `fadeVisible` - exibe ou não um elemento baseado no valor dinamico da variável isVisible
+- `value` - o input recebe o value da variável subtotal e quando o usuário digitar algo alterando o input, subtotal também será alterado
+- `i18n` - habilita a tradução do texto declarado 
+- `enable` - vai ativar ou desativar o botão de acordo com o valor verdadeiro ou falso de isVisible
+
+### **Adicionando propriedades por XML**
+
+É possível alterar a propriedade `message` que declaramos no JS através do próprio XML com um `item config`, ex: ( *layout/checkout_index_index.xml* )
+
+~~~xml
+    <item name="config" xsi:type="array">
+        <item name="message" xsi:type="number">100</item>
+    </item>
+~~~
+
+Este a propriedade message do XML irá sobrescrever a existente no JS.
+Caso tenha ficado alguma dúvida, abaixo está o exemplo completo utilizando o `item config`
+
+~~~xml
+    <block name="quick.learn.banner" template="Magento_Checkout::quick-learn-banner.phtml" before="-">
+        <arguments>
+            <argument name="jsLayout" xsi:type="array">
+                <item name="components" xsi:type="array">
+                    <item name="quick-learn-banner" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_Checkout/js/quick-learn-banner</item>
+                        <item name="config" xsi:type="array">
+                            <item name="message" xsi:type="number">100</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </block>
+~~~
+
+### **Alternativa para invocar um UiComponent**
+
+Não precisamos fazer a chamada exclusivamente pelo `XML`, podemos chamar o nosso componente pelo `PHTML` desta forma: ( *templates/quick-learn-banner.phtml* )
+
+~~~javascript
+<script type="text/x-magento-init">  
+  {
+	"#quick-learn-banner-id": {
+	    "Magento_Ui/js/core/app": {
+			"components": {
+			    "quick-learn-banner": {
+			        "component": "Magento_Checkout/js/quick-learn-banner",
+					"config": {
+                        "test": "<?= $test ?>"
+                    }
+		    	}
+			}
+	    }
+	}
+  }
+</script>
+~~~
+
+Você deve perceber que segue a mesma estrutura que a chamada pelo XML. E da mesma forma podemos passar uma config por esse objeto JSON, desta forma isso nos permite passar variáveis PHP para o nosso JS.
 
 ### ***Extras:***
 #### **Palavra reservada `this`**
